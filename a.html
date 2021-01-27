@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Qualité du logiciel</title>
+    <link href="modules/tabulator-master/dist/css/tabulator.min.css" rel="stylesheet" type="text/css"/>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+            integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="modules/tabulator-master/dist/js/tabulator.min.js"></script>
+    <script type="text/javascript" src="a.js"></script>
+</head>
+
+<body>
+    <div id="table"></div>
+    <input type="text" id="orderId" hidden>
+    <label for="item">Item</label>
+    <input type="text" id="item">
+    <br>
+    <label for="qty">Qty</label>
+    <input type="number" id="qty" min="1">
+    <br>
+    <label for="unit-price">unit price</label>
+    <input type="number" id="unit-price" min="0" step="0.01">
+    <br>
+    <button id="addButton">Ajouter au tableau</button>
+    <button id="editButton">Modifier</button>
+</body>
