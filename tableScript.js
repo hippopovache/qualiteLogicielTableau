@@ -14,13 +14,16 @@ $(document).ready(function () {
     let itemInput = $("#item")
     let qtyInput = $("#qty")
     let unitPriceInput = $("#unit-price")
+    //Ce input hidden contiendra la position dans le tableau de l'élement à modifier.
     let indexHiddenInput = $("#orderId")
 
     //initialisation du tableau avec TABULATOR
     const table = new Tabulator("#table", {
         data: tableData,
+        //Les colones sont automatiquement générées en fonction des data.
         autoColumns: true,
         selectable: 1,
+        //Au clic sur une ligne
         rowClick: function (e, row) {
             onRowClick(row)
         },
@@ -30,7 +33,7 @@ $(document).ready(function () {
         itemValue = itemInput.val()
         qtyValue = qtyInput.val()
         unitPriceValue = unitPriceInput.val()
-        //Si les valeurs entrées ne sont pas vides
+        //Si les valeurs entrées ne sont pas vides on peux ajouter les données au tableau
         if (itemValue !== "" && qtyValue !== "" && unitPriceValue !== "") {
             let data = {item: itemValue, qty: qtyValue, unitprice: unitPriceValue}
             table.addData(data)
@@ -39,7 +42,9 @@ $(document).ready(function () {
         }
     })
 
+    //cette fonction est appelée en cas de clic sur une ligne du tableau
     function onRowClick(row) {
+        //récupération des données de la ligne du tableau
         let data = row.getData()
         itemInput.val(data.item)
         qtyInput.val(data.qty)
