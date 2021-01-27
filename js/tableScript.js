@@ -1,5 +1,5 @@
-//Valeurs en dur (peuvent être chargés avant le DOM)
-let tableData = [
+//Variables et constantes qui peuvent être chargés avant le DOM
+const tableData = [
     {item: 'meuble', qty: 1, unitprice: 700},
     {item: 'peinture', qty: 2, unitprice: 40},
     {item: 'pinceaux', qty: 5, unitprice: 5},
@@ -14,21 +14,31 @@ $(document).ready(function () {
     let itemInput = $("#item")
     let qtyInput = $("#qty")
     let unitPriceInput = $("#unit-price")
-    //Ce input hidden contiendra la position dans le tableau de l'élement à modifier.
-    let indexHiddenInput = $("#orderId")
 
     //initialisation du tableau avec TABULATOR
     const table = new Tabulator("#table", {
         data: tableData,
-        //Les colones sont automatiquement générées en fonction des data.
-        autoColumns: true,
-        selectable: 1,
-        //Au clic sur une ligne
-        rowClick: function (e, row) {
-            onRowClick(row)
-        },
+        //initialisation des collones, éditables, avec des paramètres d'édition (min, step etc)
+        columns: [{title: "item", field: "item", width: 200, editor: "input"},
+            {
+                title: "qty", field: "qty", editor: "number", editorParams: {
+                    min: 1
+                }
+            },
+            {
+                title: "unitprice", field: "unitprice", editor: "number", editorParams: {
+                    min: 0,
+                    step: 0.01
+                }
+            },
+        ],
+        index: "id",
+        layout: "fitDataTable",
+        selectable: true,
+        responsiveLayout: "hide",
     })
 
+    //listener du clic sur le bouton d'ajout de données au tableau
     $("#addButton").click(function () {
         itemValue = itemInput.val()
         qtyValue = qtyInput.val()
@@ -42,15 +52,9 @@ $(document).ready(function () {
         }
     })
 
-    //cette fonction est appelée en cas de clic sur une ligne du tableau
-    function onRowClick(row) {
-        //récupération des données de la ligne du tableau
-        let data = row.getData()
-        itemInput.val(data.item)
-        qtyInput.val(data.qty)
-        unitPriceInput.val(data.unitprice)
-        //On met dans le input caché la la position de la ligne dans le tableau
-        indexHiddenInput.val(row.getPosition())
-    }
+    $("#deleteButton").click(function () {
+        let rowsToDelete = table.getSelectedRows()
+        table.deleteRow(rowsToDelete)
+    })
 
 })
