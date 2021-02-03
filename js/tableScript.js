@@ -1,10 +1,10 @@
 //Constantes qui peuvent être chargés avant le DOM
 const tableData = [
-    {item: 'meuble', qty: 1, unitprice: 700},
-    {item: 'peinture', qty: 2, unitprice: 40},
-    {item: 'pinceaux', qty: 5, unitprice: 5},
-    {item: 'ampoules', qty: 6, unitprice: 25},
-    {item: 'sucres', qty: 3, unitprice: 0.5},
+    {item: 'meuble', qty: 1, unitprice: 700, totalht: 700},
+    {item: 'peinture', qty: 2, unitprice: 40, totalht: 80},
+    {item: 'pinceaux', qty: 5, unitprice: 5, totalht: 25},
+    {item: 'ampoules', qty: 6, unitprice: 25, totalht: 150},
+    {item: 'sucres', qty: 3, unitprice: 0.5, totalht: 1.5},
 ];
 const tva = 0.2;
 
@@ -16,6 +16,7 @@ $(document).ready(function () {
     let qtyInput = $("#qty");
     let unitPriceInput = $("#unit-price");
 
+
     //initialisation du tableau avec TABULATOR
     const table = new Tabulator("#table", {
         data: tableData,
@@ -24,6 +25,9 @@ $(document).ready(function () {
             {
                 title: "qty", field: "qty", editor: "number", editorParams: {
                     min: 1,
+                    function() {
+                        console.log('yp');
+                    }
                 }
             },
             {
@@ -31,6 +35,9 @@ $(document).ready(function () {
                     min: 0,
                     step: 0.01,
                 }
+            },
+            {
+                title: "total ht", field: "totalht"
             },
         ],
         index: "id",
@@ -45,9 +52,10 @@ $(document).ready(function () {
         let itemValue = itemInput.val();
         let qtyValue = qtyInput.val();
         let unitPriceValue = unitPriceInput.val();
+        let totalHt = qtyValue * unitPriceValue;
         //Si les valeurs entrées ne sont pas vides on peux ajouter les données au tableau
         if (itemValue !== "" && qtyValue !== "" && unitPriceValue !== "") {
-            let data = {item: itemValue, qty: qtyValue, unitprice: unitPriceValue};
+            let data = {item: itemValue, qty: qtyValue, unitprice: unitPriceValue, totalht: totalHt};
             table.addData(data);
         } else {
             alert("Veuillez entrer une valeur dans chacun des champs");
