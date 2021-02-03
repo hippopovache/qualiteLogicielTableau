@@ -1,4 +1,4 @@
-//Variables et constantes qui peuvent être chargés avant le DOM
+//Constantes qui peuvent être chargés avant le DOM
 const tableData = [
     {item: 'meuble', qty: 1, unitprice: 700},
     {item: 'peinture', qty: 2, unitprice: 40},
@@ -6,6 +6,7 @@ const tableData = [
     {item: 'ampoules', qty: 6, unitprice: 25},
     {item: 'sucres', qty: 3, unitprice: 0.5},
 ];
+const tva = 0.2;
 
 //dès que le DOM est chargé :
 $(document).ready(function () {
@@ -62,18 +63,21 @@ $(document).ready(function () {
     //Listener du clic sur le bouton de calcul du total
     $("#calcul-button").click(function () {
         let rows = table.getRows();
-        let tva = 0.2;
         let total = 0;
+
         rows.forEach(function (row) {
             total += row.getData().unitprice * row.getData().qty;
         });
         let totalTva = total * tva;
         let totalTtc = total * (1 + tva);
+
+        //Ecriture des totaux généraux arrondis au centime
         $('#total').html(roundCent(total));
         $('#total-tva').html(roundCent(totalTva));
         $('#total-ttc').html(roundCent(totalTtc));
     });
 
+    //fonction qui arrondit au centime
     function roundCent(value) {
         return Math.round(value * 100) / 100;
     }
