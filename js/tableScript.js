@@ -25,9 +25,6 @@ $(document).ready(function () {
             {
                 title: "qty", field: "qty", editor: "number", editorParams: {
                     min: 1,
-                    function() {
-                        console.log('yp');
-                    }
                 }
             },
             {
