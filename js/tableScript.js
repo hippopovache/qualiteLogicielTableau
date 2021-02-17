@@ -19,7 +19,7 @@ $(document).ready(function () {
 
     //initialisation du tableau avec TABULATOR
     const table = new Tabulator("#table", {
-        data: tableData,
+        //data: tableData,
         //initialisation des collones, éditables, avec des paramètres d'édition (min, step etc)
         columns: [{title: "item", field: "item", width: 200, editor: "input"},
             {
@@ -57,6 +57,9 @@ $(document).ready(function () {
         } else {
             alert("Veuillez entrer une valeur dans chacun des champs");
         }
+        itemInput.val('');
+        qtyInput.val('');
+        unitPriceInput.val('');
     });
 
     //listener du clic du le bouton de suppression de données au tableau
