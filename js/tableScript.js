@@ -38,6 +38,8 @@ $(document).ready(function () {
             },
         ],
         index: "id",
+        pagination:"local",
+        paginationSize:10,
         layout: "fitDataTable",
         selectable: true,
         responsiveLayout: "hide",
@@ -76,13 +78,14 @@ $(document).ready(function () {
         rows.forEach(function (row) {
             total += row.getData().unitprice * row.getData().qty;
         });
-        let totalTva = total * tva;
-        let totalTtc = total * (1 + tva);
+        total = roundCent(total)
+        let totalTva = roundCent(total * tva);
+        let totalTtc = roundCent(total * (1 + tva));
 
         //Ecriture des totaux généraux arrondis au centime
-        $('#total').html(roundCent(total));
-        $('#total-tva').html(roundCent(totalTva));
-        $('#total-ttc').html(roundCent(totalTtc));
+        $('#total').html(total);
+        $('#total-tva').html(totalTva);
+        $('#total-ttc').html(totalTtc);
     });
 
     //fonction qui arrondit au centime
