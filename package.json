@@ -1,0 +1,29 @@
+{
+  "name": "qualitelogiciel",
+  "version": "1.0.1",
+  "description": "Cours de qualite du logiciel",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hippopovache/qualiteLogicielTableau.git"
+  },
+  "author": "maxime belle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hippopovache/qualiteLogicielTableau/issues"
+  },
+  "homepage": "https://github.com/hippopovache/qualiteLogicielTableau#readme",
+  "dependencies": {
+    "chai": "^4.3.0",
+    "jquery": "^3.5.1",
+    "mocha": "^8.3.0",
+    "node-fetch": "^2.6.1",
+    "selenium-webdriver": "^4.0.0-beta.1"
+  }
+}
