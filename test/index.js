@@ -2,6 +2,7 @@ const {Builder, By, Key, until} = require('selenium-webdriver');
 const fetch = require('node-fetch');
 const assert = require('chai').assert;
 const faker = require('faker/locale/fr');
+const FormData = require('form-data');
 
 (async function () {
     console.log('Name: ', faker.name.firstName(), faker.name.lastName());
@@ -69,7 +70,7 @@ for (let i = 0; i < 1000; i++) {
 
 
     await driver.findElement(By.id('calcul-button')).click()
-    let totalTtc = await driver.findElement(By.id('total-ttc')).getText()
+    const totalTtc = await driver.findElement(By.id('total-ttc')).getText()
     try {
         assert.equal(totalTtc, '1296.46')
     } catch (e) {

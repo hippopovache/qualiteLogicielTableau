@@ -12,9 +12,9 @@ const tva = 0.2;
 $(document).ready(function () {
 
     //Initialisation des variables
-    let itemInput = $("#item");
-    let qtyInput = $("#qty");
-    let unitPriceInput = $("#unit-price");
+    const itemInput = $("#item");
+    const qtyInput = $("#qty");
+    const unitPriceInput = $("#unit-price");
 
 
     //initialisation du tableau avec TABULATOR
@@ -38,8 +38,8 @@ $(document).ready(function () {
             },
         ],
         index: "id",
-        pagination:"local",
-        paginationSize:10,
+        pagination: "local",
+        paginationSize: 10,
         layout: "fitDataTable",
         selectable: true,
         responsiveLayout: "hide",
@@ -48,14 +48,31 @@ $(document).ready(function () {
     //Listeners
     //listener du clic sur le bouton d'ajout de données au tableau
     $("#add-button").click(function () {
-        let itemValue = itemInput.val();
-        let qtyValue = qtyInput.val();
-        let unitPriceValue = unitPriceInput.val();
-        let totalHt = qtyValue * unitPriceValue;
+        const itemValue = itemInput.val();
+        const qtyValue = qtyInput.val();
+        const unitPriceValue = unitPriceInput.val();
+        const totalHt = qtyValue * unitPriceValue;
         //Si les valeurs entrées ne sont pas vides on peux ajouter les données au tableau
         if (itemValue !== "" && qtyValue !== "" && unitPriceValue !== "") {
-            let data = {item: itemValue, qty: qtyValue, unitprice: unitPriceValue, totalht: totalHt};
+            const data = {item: itemValue, qty: qtyValue, unitprice: unitPriceValue, totalht: totalHt};
             table.addData(data);
+            const item = itemValue
+            const qty = qtyValue
+            const unitPrice = unitPriceValue
+
+            const formData = new FormData()
+            formData.append('item', item)
+            formData.append('qty', qty)
+            formData.append('unitPrice', unitPrice)
+
+
+            fetch('http://localhost/tests/index.php', {method: 'POST', body: formData})
+                .then(function (response) {
+                    console.log(response.text())
+                    return response.text();
+                }).catch((err) => {
+                console.error(err)
+            })
         } else {
             alert("Veuillez entrer une valeur dans chacun des champs");
         }
@@ -66,21 +83,21 @@ $(document).ready(function () {
 
     //listener du clic du le bouton de suppression de données au tableau
     $("#delete-button").click(function () {
-        let rowsToDelete = table.getSelectedRows();
+        const rowsToDelete = table.getSelectedRows();
         table.deleteRow(rowsToDelete);
     });
 
     //Listener du clic sur le bouton de calcul du total
     $("#calcul-button").click(function () {
-        let rows = table.getRows();
+        const rows = table.getRows();
         let total = 0;
 
         rows.forEach(function (row) {
             total += row.getData().unitprice * row.getData().qty;
         });
         total = roundCent(total)
-        let totalTva = roundCent(total * tva);
-        let totalTtc = roundCent(total * (1 + tva));
+        const totalTva = roundCent(total * tva);
+        const totalTtc = roundCent(total * (1 + tva));
 
         //Ecriture des totaux généraux arrondis au centime
         $('#total').html(total);
